@@ -52,7 +52,7 @@ function set_visibility(thing, spam_about_thing) {
       return;
   }
   
-  visible = valid_prompt("Would you like to know my biography (yes/no)?", "yes");
+  visible = valid_prompt("Would you like to know about "+prompt_spam+" (yes/no)?", "yes");
   if(visible === "yes")
     document.getElementById(thing).innerHTML = document.getElementById(thing).innerHTML + "<br>" + spam_about_thing;
 }
