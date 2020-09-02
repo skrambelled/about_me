@@ -26,7 +26,7 @@ function valid_prompt(message) {
   return visible;
 }
 
-function set_visibility(thing, spam_about_thing) {
+function set_visibility(thing) {
   var prompt_spam;
   var visible;
 
@@ -34,15 +34,19 @@ function set_visibility(thing, spam_about_thing) {
     case "bio":
       prompt_spam = "my biography";
       break;
+      
     case "edu":
       prompt_spam = "my education";
       break;
+
     case "job":
       prompt_spam = "my work experience";
       break;
+
     case "goal":
       prompt_spam = "my goals";
       break;
+
     case "hobby":
       prompt_spam = "my hobbies";
       break;
@@ -53,6 +57,6 @@ function set_visibility(thing, spam_about_thing) {
   }
   
   visible = valid_prompt("Would you like to know about "+prompt_spam+" (yes/no)?", "yes");
-  if(visible === "yes")
-    document.getElementById(thing).innerHTML = document.getElementById(thing).innerHTML + "<br>" + spam_about_thing;
+  if(visible !== "yes")
+    document.getElementById(thing).innerHTML = "";
 }
