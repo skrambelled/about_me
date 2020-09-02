@@ -1,8 +1,12 @@
 'use strict';
+// debug
 console.log("JS loaded");
 
+// global username, so we can refernce it in multiple places
+var userName;
+
 function set_greeting() {
-  var userName = prompt("What is your name?");
+  userName = prompt("What is your name?");
   if (typeof(userName) === "string")
     // capitalize the first letter of their name, we wont make any other assumptions about their name
     // example from: https://dzone.com/articles/capitalize-first-letter-string-javascript
@@ -23,7 +27,8 @@ function valid_prompt(message) {
 
   // Commented out the console.log per instructions on the lab
   //console.log("question: "+message, "answer: " +visible);
-  alert("You answered "+visible);
+
+  alert("You answered "+visible+", which is considered "+(visible === 'yes' ? "" : "in")+"correct.");
   return visible;
 }
 
@@ -61,3 +66,13 @@ function set_visibility(thing) {
   if(visible !== "yes")
     document.getElementById(thing).innerHTML = "";
 }
+
+// run our script
+set_greeting();
+set_visibility("bio");
+set_visibility("edu");
+set_visibility("job");
+set_visibility("goal");
+set_visibility("hobby");
+
+alert(userName + ", congratulations! You've answered all of the questions!");
