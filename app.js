@@ -21,8 +21,9 @@ function valid_prompt(message) {
   else
     visible = "no";
 
-  console.log("question: "+message, "answer: " +visible);
-  alert("You answered "+visible)
+  // Commented out the console.log per instructions on the lab
+  //console.log("question: "+message, "answer: " +visible);
+  alert("You answered "+visible);
   return visible;
 }
 
@@ -34,7 +35,7 @@ function set_visibility(thing) {
     case "bio":
       prompt_spam = "my biography";
       break;
-      
+
     case "edu":
       prompt_spam = "my education";
       break;
