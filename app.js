@@ -60,6 +60,7 @@ for(var i = 0; i<questions.length; i++) {
         } else {
           guesses--;
   
+          
           var spam = null;
           for(var j = 0; j<food.length; j++) {
             if(!spam) // first item
@@ -71,7 +72,7 @@ for(var i = 0; i<questions.length; i++) {
           }
   
           if(guesses)
-            alert("Nope, "+guess+" is not my favorite food today. You have "+guesses+" guesses left. Here's a hint, I enjoy: "+spam+".");
+            alert("Nope, "+guess+" is not my favorite food today. You have "+guesses+" guess"+(guesses===1?"":"es")+" left. Here's a hint, I enjoy: "+spam+".");
           else
             alert("Darn, you are out of guesses. My favorite food today is "+answer);
           continue;
@@ -88,11 +89,11 @@ for(var i = 0; i<questions.length; i++) {
 
       if(guess < answer) {
         guesses--;
-        alert("Too low. You have "+guesses+" guesses remaining.");
+        alert("Too low. You have "+guesses+" guess"+(guesses===1?"":"es")+" remaining.");
         continue;
       } else if(guess > answer) {
         guesses--;
-        alert("Too high. You have "+guesses+" guesses remaining.");
+        alert("Too high. You have "+guesses+" guess"+(guesses===1?"":"es")+" remaining.");
         continue;
       } else {
         alert("You guessed it! "+answer+" is correct.");
