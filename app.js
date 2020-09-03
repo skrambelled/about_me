@@ -1,78 +1,107 @@
-'use strict';
-// debug
-console.log("JS loaded");
+'using strict'
 
-// global username, so we can refernce it in multiple places
-var userName;
+var user_name = (prompt("Hello, what is your name?") || "Someone");
+var score = 0;
+// for the purpose of using a loop later we'll assign a random correct answer,
+// cause i do love food and my favorite type changes sometimes!
+var food = ["crab", "sushi", "lobster", "curry",
+            "pizza", "lasagna", "malai kofta",
+            "vegetable korma", "pupusas", "somosas",
+            "spinach dip", "chips", "burgers", "cheesecake",
+            "cookies", "baked potatoes", "bahn mi"];
 
-function set_greeting() {
-  userName = prompt("What is your name?");
-  if (typeof(userName) === "string")
-    // capitalize the first letter of their name, we wont make any other assumptions about their name
-    // example from: https://dzone.com/articles/capitalize-first-letter-string-javascript
-    userName = userName.charAt(0).toUpperCase() + userName.slice(1);
-    document.getElementById("greeting").innerHTML = "Hello " + userName + ", its great to meet you!";
-}
+var questions = [
+  // [ question, answer, guesses 
+  ['Is my name Mark?', 'y', 1], 
+  ['Was I born in Oklahoma?', 'n', 1],
+  ['Did I grow up in the Seattle area?', 'y', 1],
+  ['Do I like playing PUBG?', 'y', 1],
+  ['Am I a turtle?', 'n', 1],
+  ["Pick a number between 1 and 10?", Math.floor(Math.random() * 10), 4],
+  ["What is my favorite seafood?", food[Math.floor(Math.random() * food.length)], 6]
+]
 
-// Using a single function to validate a yes/no answer for each prompted question
-function valid_prompt(message) {
-  var visible;
+for(var i = 0; i<questions.length; i++) {
+  var question = questions[i][0]; // question posed to user
+  var answer   = questions[i][1]; // correct answer
+  var guesses  = questions[i][2]; // number of guesses allowed
+
+  while(guesses) {
+    guess = prompt(question);
+
+    console.log("q: "+question);
+    console.log("a: "+answer);
+    console.log("g: "+guess);
+
+    // for string answers 
+    if(typeof(answer) == "string") {
+      // for yes/no questions, try to validate the user input
+      if(answer === 'y' || answer === 'n') {
+        if(typeof(guess) === 'string') {
+          guess = guess.charAt(0).toLowerCase();
+        } else {
+          alert("Please answer with 'yes' or 'no'.");
+          continue; // give them a do-over if they didn't put a string in
+        }
+        
+        if(guess === answer) {
+          alert("Yep, you got it right!");
+          score++;
+          break; // they dont need any more attempts
+        } else {
+          guesses--;
+          alert("Incorrect.");
+        }
+      } else { // is a string answer, but not y or n, so must be the food question
+        if(guess === answer) {
+          alert("You are totally right! I love "+answer+"!");
+          score++;
+          break; // we don't need more attempts
+        } else {
+          guesses--;
   
-  visible = prompt(message, "yes");
+          var spam = null;
+          for(var j = 0; j<food.length; j++) {
+            if(!spam) // first item
+              spam = food[j];
+            else if(j === food.length -1) // last item
+              spam = spam + " and " + food[j];
+            else // middle items
+              spam = spam + ", " + food[j];
+          }
+  
+          if(guesses)
+            alert("Nope, "+guess+" is not my favorite food today. You have "+guesses+" guesses left. Here's a hint, I enjoy: "+spam+".");
+          else
+            alert("Darn, you are out of guesses. My favorite food today is "+answer);
+          continue;
+        }
+      }
+    }
 
-  if(visible.charAt(0).toLowerCase() === "y")
-    visible = "yes";
-  else
-    visible = "no";
+    // for number guessing game, format input into a number
+    else if(typeof(answer) === 'number') {
+      if(!(guess = parseInt(guess)) || guess < 1 || guess > 10) {
+        alert("Please answer with a number between 1 and 10.");
+        continue; // mulligan
+      }
 
-  // Commented out the console.log per instructions on the lab
-  //console.log("question: "+message, "answer: " +visible);
+      if(guess < answer) {
+        guesses--;
+        alert("Too low. You have "+guesses+" guesses remaining.");
+        continue;
+      } else if(guess > answer) {
+        guesses--;
+        alert("Too high. You have "+guesses+" guesses remaining.");
+        continue;
+      } else {
+        alert("You guessed it! "+answer+" is correct.");
+        score++;
+        break; // they don't need more attempts
+      }
+    }
 
-  alert("You answered "+visible+", which is considered "+(visible === 'yes' ? "" : "in")+"correct.");
-  return visible;
-}
-
-function set_visibility(thing) {
-  var prompt_spam;
-  var visible;
-
-  switch(thing) {
-    case "bio":
-      prompt_spam = "my biography";
-      break;
-
-    case "edu":
-      prompt_spam = "my education";
-      break;
-
-    case "job":
-      prompt_spam = "my work experience";
-      break;
-
-    case "goal":
-      prompt_spam = "my goals";
-      break;
-
-    case "hobby":
-      prompt_spam = "my hobbies";
-      break;
-
-    default:
-      console.log("Illegal action: set_visibility("+thing+")");
-      return;
   }
-  
-  visible = valid_prompt("Would you like to know about "+prompt_spam+" (yes/no)?", "yes");
-  if(visible !== "yes")
-    document.getElementById(thing).innerHTML = "";
 }
 
-// run our script
-set_greeting();
-set_visibility("bio");
-set_visibility("edu");
-set_visibility("job");
-set_visibility("goal");
-set_visibility("hobby");
-
-alert(userName + ", congratulations! You've answered all of the questions!");
+alert("You've completed the game! Your score is "+score+" out of "+questions.length+" ("+Math.floor((100 * score / questions.length) + .5)+"%)");
