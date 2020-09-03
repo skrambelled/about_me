@@ -40,7 +40,7 @@ function main(){
 		}
 
 		for (var i = 0; i < guesses && !isCorrect; i++){			
-			var userInput = prompt(questionName + '\n\n' + newString);
+			var userInput = prompt(questionName + '\n\n' + newString).toLowerCase();
 			
   	  if (typeof(correctAnswer) == 'number') {
   	  	userInput = parseInt(userInput);
@@ -76,7 +76,7 @@ function main(){
     ['Did I grow up in the Seattle area?', ['y', 'yes'], 1, 'yes or no'],
     ['Do I like playing PUBG?', ['y', 'yes'], 1, 'yes or no'],
     ['Am I a turtle?', ['n', 'no'], 1, 'yes or no'],
-    ["Pick a number between 1 and 10?", Math.ceiling(Math.random() * 10), 4, '1 through 10'],
+    ["Pick a number between 1 and 10?", Math.ceil(Math.random() * 10), 4, '1 through 10'],
     ["What is my favorite food?", food[Math.floor(Math.random() * food.length)], 6, food]
     ]
 
