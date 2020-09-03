@@ -49,7 +49,7 @@ function main(){
    		 	} else {
    		 		alert('Please guess with integers!');
    		 		i--;
-   		 	} 
+   		 	}
 	    } else {
     		isCorrect = askStringQuestion(questionName, correctAnswer, userInput);
     	}
